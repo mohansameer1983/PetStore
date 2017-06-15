@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().httpBasic()
 		.realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint())
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	  http.headers().frameOptions().disable();
 	  }
 	
 	
