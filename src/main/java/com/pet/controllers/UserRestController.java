@@ -3,7 +3,6 @@ package com.pet.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +18,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/")
 @Api(value="user", description="Operations about user")
-public class PetStoreRestController {
+public class UserRestController {
 
 	private UserService userService;
 
@@ -38,7 +37,7 @@ public class PetStoreRestController {
 			@ApiResponse(code = 404, message = "Users not found")
 	})
 	@RequestMapping(value = "/list", method= RequestMethod.GET, produces = "application/xml")
-	public Iterable<User> list(Model model){
+	public Iterable<User> list(){
 		return userService.listAllUsers();
 	}
 
@@ -48,8 +47,8 @@ public class PetStoreRestController {
 			@ApiResponse(code = 400, message = "Invalid Id supplied"),
 			@ApiResponse(code = 404, message = "User not found"),
 	})
-	@RequestMapping(value = "/{id}", method= RequestMethod.GET, produces = "application/xml")
-	public User getUserById(@PathVariable Integer id, Model model){
+	@RequestMapping(value = "/{id}", method= RequestMethod.GET, produces = "application/json")
+	public User getUserById(@PathVariable Integer id){
 		return userService.getUserById(id);
 	}
 
@@ -59,13 +58,13 @@ public class PetStoreRestController {
 			@ApiResponse(code = 400, message = "Invalid Id supplied"),
 			@ApiResponse(code = 404, message = "User not found"),
 	})
-	@RequestMapping(value = "/findByUserName/{userName}", method= RequestMethod.GET, produces = "application/xml")
-	public User getUserByUserName(@PathVariable String userName, Model model){
+	@RequestMapping(value = "/findByUserName/{userName}", method= RequestMethod.GET, produces = "application/json")
+	public User getUserByUserName(@PathVariable String userName){
 		return userService.getUserByUserName(userName);
 	}
 
 	@ApiOperation(value = "Create user")
-	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/xml")
+	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity saveUser(@RequestBody User user){
 		userService.saveUser(user);
 		return new ResponseEntity("successful operation", HttpStatus.OK);
@@ -73,8 +72,8 @@ public class PetStoreRestController {
 	
 
     @ApiOperation(value = "Update a user")
-    @RequestMapping(value = "/{userName}", method = RequestMethod.PUT, produces = "application/xml")
-    public ResponseEntity updateProduct(@PathVariable String userName, @RequestBody User newUser){
+    @RequestMapping(value = "/{userName}", method = RequestMethod.PUT, produces = "application/json")
+    public ResponseEntity updateUser(@PathVariable String userName, @RequestBody User newUser){
     	User user = userService.getUserByUserName(userName);
     	user.setId(newUser.getId());
     	user.setEmail(newUser.getEmail());
@@ -94,7 +93,7 @@ public class PetStoreRestController {
 			@ApiResponse(code = 400, message = "Invalid username supplied"),
 			@ApiResponse(code = 404, message = "User not found"),
 	})
-    @RequestMapping(value="/{userName}", method = RequestMethod.DELETE, produces = "application/xml")
+    @RequestMapping(value="/{userName}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity delete(@PathVariable String userName){
     	userService.deleteUser(userName);
         return new ResponseEntity("successful operation", HttpStatus.OK);

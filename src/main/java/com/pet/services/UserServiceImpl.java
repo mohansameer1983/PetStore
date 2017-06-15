@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Autowired
-	public void setProductRepository(UserRepository userRepository) {
+	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
